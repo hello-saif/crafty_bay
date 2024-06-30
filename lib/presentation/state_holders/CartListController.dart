@@ -7,6 +7,8 @@ import '../../data/models/cart_item.dart';
 import '../../data/models/cart_list_model.dart';
 
 class CartListController extends GetxController {
+
+
   bool _inProgress = false;
   String _errorMessage = '';
   List<CartItemModel> _cartList = [];

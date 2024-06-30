@@ -1,5 +1,6 @@
 import 'package:crafty_bay/presentation/state_holders/AddToWishListController.dart';
 import 'package:crafty_bay/presentation/state_holders/CartListController.dart';
+import 'package:crafty_bay/presentation/state_holders/TODO/Review_Controll.dart';
 import 'package:crafty_bay/presentation/state_holders/WishListController.dart';
 import 'package:crafty_bay/presentation/state_holders/add_to_Cart_Controll.dart';
 import 'package:crafty_bay/presentation/state_holders/category_list_controller.dart';
@@ -32,5 +33,7 @@ class ControllerBinder extends Bindings {
     Get.put(AddToWishListController());
     Get.put(WishListController());
     Get.put(CartListController());
+
+    Get.put(ReviewController());
   }
 }

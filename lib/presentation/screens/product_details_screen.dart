@@ -12,6 +12,8 @@ import 'package:item_count_number_button/item_count_number_button.dart';
 
 import '../state_holders/AddToWishListController.dart';
 import '../state_holders/add_to_Cart_Controll.dart';
+import 'TODO/Review_Screen.dart';
+import 'cart_list_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});
@@ -80,13 +82,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               Row(
                                 children: [
                                   Expanded(
-                                      child: Text(
-                                        productDetails.product?.title ?? '',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black.withOpacity(0.8)),
-                                      )),
+                                    child: Text(
+                                      productDetails.product?.title ?? '',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black.withOpacity(0.8)),
+                                    ),
+                                  ),
                                   _buildCounter()
                                 ],
                               ),
@@ -146,18 +149,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildAddToCartSection(ProductDetailsModel productDetails) {
+    double unitPrice = double.tryParse(productDetails.product?.price?.toString() ?? '0') ?? 0;
+    double totalPrice = unitPrice * _counterValue;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: AppColors.primaryColor.withOpacity(0.1),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          )),
+        color: AppColors.primaryColor.withOpacity(0.1),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildPriceWidget(productDetails),
+          _buildPriceWidget(totalPrice),
           SizedBox(
             width: 120,
             child: GetBuilder<AddToCartController>(
@@ -176,6 +183,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     );
 
                     addToCartController.addToCart(cartModel);
+
+
                   },
                   child: const Text('Add to Cart'),
                 );
@@ -187,16 +196,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildPriceWidget(ProductDetailsModel productDetails) {
+  Widget _buildPriceWidget(double totalPrice) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Price',
+          'Total Price',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
         ),
         Text(
-          '\$${productDetails.product?.price ?? 0}',
+          '\$$totalPrice',
           style: const TextStyle(
               fontSize: 24,
               color: AppColors.primaryColor,
@@ -222,7 +231,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Text('${productDetails.product?.star ?? 0}')
           ],
         ),
-        TextButton(onPressed: () {}, child: const Text('Reviews')),
+        TextButton(onPressed: () {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const ReviewsScreen()), (route) => false);
+        }, child: const Text('Reviews')),
         GetBuilder<AddToWishListController>(
           builder: (addToWishListController) {
             if (addToWishListController.inProgress) {
@@ -250,8 +261,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       decimalPlaces: 0,
       color: AppColors.primaryColor,
       onChanged: (value) {
-        _counterValue = value as int;
-        setState(() {});
+        setState(() {
+          _counterValue = value as int;
+        });
       },
     );
   }
