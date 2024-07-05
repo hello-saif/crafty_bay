@@ -12,6 +12,7 @@ import 'package:item_count_number_button/item_count_number_button.dart';
 
 import '../state_holders/AddToWishListController.dart';
 import '../state_holders/add_to_Cart_Controll.dart';
+import '../widgets/Snack_message.dart';
 import 'TODO/Review_Screen.dart';
 import 'cart_list_screen.dart';
 
@@ -182,12 +183,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       quantity: _counterValue,
                     );
 
-                    addToCartController.addToCart(cartModel);
-
-
+                    addToCartController.addToCart(cartModel).then((result) {
+                      if (result) {
+                        showSnackMessage(context, 'Added to cart');
+                        // Navigate to CartListScreen after adding to cart
+                        Get.to(() => const CartListScreen());
+                      } else {
+                        showSnackMessage(context, addToCartController.errorMessage);
+                      }
+                    });
                   },
                   child: const Text('Add to Cart'),
                 );
+
               },
             ),
           )

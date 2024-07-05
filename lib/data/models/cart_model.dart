@@ -4,6 +4,9 @@ class CartModel {
   final String size;
   final int quantity;
 
+
+
+
   CartModel(
       {required this.productId,
         required this.color,
@@ -15,7 +18,7 @@ class CartModel {
       "product_id": productId,
       "color": color,
       "size": size,
-      "qty": quantity
+      "qty": quantity,
     };
   }
 }

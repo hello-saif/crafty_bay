@@ -1,7 +1,7 @@
+import 'package:crafty_bay/presentation/screens/checkout_screen.dart';
 import 'package:crafty_bay/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/widgets/cart_product_item.dart';
-import 'package:crafty_bay/presentation/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,9 +39,9 @@ class _CartListScreenState extends State<CartListScreen> {
           ),
         ),
         body: GetBuilder<CartListController>(builder: (cartListController) {
-          if (cartListController.inProgress) {
-            return const CenteredCircularProgressIndicator();
-          }
+          // if (cartListController.inProgress) {
+          //   return const CenteredCircularProgressIndicator();
+          // }
 
           return Column(
             children: [
@@ -78,7 +78,9 @@ class _CartListScreenState extends State<CartListScreen> {
           SizedBox(
             width: 100,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const CheckoutScreen());
+              },
               child: const Text('Checkout'),
             ),
           )
