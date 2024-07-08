@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../state_holders/CartListController.dart';
+import 'TODO/Bkash.dart';
 
 class CartListScreen extends StatefulWidget {
   const CartListScreen({super.key});
@@ -79,7 +80,9 @@ class _CartListScreenState extends State<CartListScreen> {
             width: 100,
             child: ElevatedButton(
               onPressed: () {
-                Get.to(() => const CheckoutScreen());
+                //Get.to(() => const CheckoutScreen());
+                Get.to(() => const Bkash(title: 'bKash Demo',));
+
               },
               child: const Text('Checkout'),
             ),
